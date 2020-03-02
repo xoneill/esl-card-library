@@ -1,0 +1,35 @@
+@import '../../../../styles/variables';
+
+.navbar-brand {
+	color: $golden;
+}
+
+.text-overflow {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.toggle-search-mode-btn {
+	display: none;
+}
+
+.mobile-search-on {
+	.navbar-brand,
+	.d-sm-none {
+		display: none !important;
+	}
+
+	.toggle-search-mode-btn,
+	.d-sm-inline-flex {
+		display: inline-flex !important;
+	}
+
+	.navbar-search {
+		width: 100%;
+	}
+}
+
+.btn-link > i.fa {
+	font-size: 120%;
+}

@@ -1,0 +1,23 @@
+<header class="navbar bg-black-opacity fixed-top d-flex pl-0 pr-0">
+	<div class="container-fluid flex-nowrap layout-max-width" [ngClass]="{'mobile-search-on': isSearchMode}">
+		<div class="navbar-brand p-0 text-uppercase text-overflow">Elder Scrolls: Legends</div>
+		<div class="navbar-search ml-auto d-inline-flex align-items-center">
+			<div class="d-none d-sm-inline-flex w-100">
+				<button class="btn btn-link toggle-search-mode-btn mr-2" (click)="toggleSearchMode()">
+					<i class="fa fa-chevron-left"></i>
+				</button>
+				<app-search-control
+					class="d-flex w-100"
+					[isFocused]="isSearchMode"
+					[value]="nameFilter"
+					(valueChange)="search($event)">
+				</app-search-control>
+			</div>
+			<div class="d-sm-none d-inline-block">
+				<button class="btn btn-link" (click)="toggleSearchMode()">
+					<i class="fa fa-search"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+</header>

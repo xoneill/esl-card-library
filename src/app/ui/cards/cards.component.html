@@ -1,0 +1,10 @@
+<cards-header [nameFilter]="searchTerm$ | async"></cards-header>
+<div class="container-fluid flex-nowrap layout-max-width">
+	<cards-status [total]="total$ | async" [nameFilter]="searchTerm$ | async" (resetSearch)="resetSearch()"></cards-status>
+	<cards-grid
+		[cards]="cards$ | async"
+		(scrollChange)="onScroll()">
+	</cards-grid>
+	<cards-fetch-btn *ngIf="showMore$ | async" (click)="showMore()"></cards-fetch-btn>
+	<cards-loading-indicator [visible]="isLoading$ | async"></cards-loading-indicator>
+</div>

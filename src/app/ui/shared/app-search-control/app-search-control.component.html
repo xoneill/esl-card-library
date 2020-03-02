@@ -1,0 +1,11 @@
+<input
+	name="searchControl"
+	class="form-control form-control-dark mr-2"
+	type="search"
+	placeholder="Search"
+	[appSelfFocus]="isFocused"
+	[(ngModel)]="value"
+	(keyup.enter)="search(); blur($event);">
+<button class="btn btn-primary" type="button" (click)="search()">
+	<i class="fa fa-search"></i>
+</button>

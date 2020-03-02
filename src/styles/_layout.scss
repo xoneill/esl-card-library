@@ -1,0 +1,9 @@
+@import './variables';
+
+body {
+	padding-top: 3.5rem;
+}
+
+.layout-max-width {
+	max-width: $layout-max-width;
+}
