@@ -26,11 +26,11 @@ const cardsReducer = createReducer(
 		...state,
 		isLoading: false,
 		error: error.message,
-		paging: { ...state.paging, page: --state.paging.page || 1 }
+		paging: { ...state.paging, page: (state.paging.page - 1) || 1 }
 	})),
 	on(CardsPageActions.incrementPage, (state) => ({
 		...state,
-		paging: { ...state.paging, page: ++state.paging.page }
+		paging: { ...state.paging, page: (state.paging.page + 1) }
 	}))
 );
 
