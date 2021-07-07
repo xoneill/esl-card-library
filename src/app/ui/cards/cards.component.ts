@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { AppState } from '../../core/store/app.state';
-import { IncrementPage, SearchName } from '../../core/store/cards/cards.actions';
+import { incrementPage, searchName } from '../../core/store/cards/cards.actions';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { CardInfo } from '../../business/cards/dto/card-info';
 import {
@@ -42,8 +42,8 @@ export class CardsComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnInit(): void {
-		this.subscriptions.push(this.route.queryParams.subscribe((data: { nameFilter: string }) => {
-			this.store.dispatch(new SearchName(data.nameFilter));
+		this.subscriptions.push(this.route.queryParams.subscribe(({ nameFilter }) => {
+			this.store.dispatch(searchName({ nameFilter }));
 		}));
 
 		// Lazy Loading
@@ -55,7 +55,7 @@ export class CardsComponent implements OnInit, OnDestroy {
 
 		this.subscriptions.push(this.error$.subscribe((error) => {
 			if (!StringHelper.isNullOrEmpty(error)) {
-				this.toastr.error(error, 'Error!', {timeOut: 0});
+				this.toastr.error(error, 'Error!', { timeOut: 0 });
 			}
 		}));
 	}
@@ -65,11 +65,11 @@ export class CardsComponent implements OnInit, OnDestroy {
 	}
 
 	showMore(): void {
-		this.store.dispatch(new IncrementPage());
+		this.store.dispatch(incrementPage());
 	}
 
 	resetSearch(): void {
-		this.router.navigate(['.'], {relativeTo: this.route, queryParams: null});
+		this.router.navigate(['.'], { relativeTo: this.route, queryParams: null });
 	}
 
 	ngOnDestroy(): void {
