@@ -1,46 +1,25 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 import { CardsData } from '../../../business/cards/dto/cards-data';
 
-export enum CardsActionType {
-	SearchName = '[CardsActionType] Search Name',
-	GetCards = '[CardsActionType] Get Cards',
-	GetCardsSuccess = '[CardsActionType] Get Cards Success',
-	GetCardsFailed = '[CardsActionType] Get Cards Failed',
-	IncrementPage = '[CardsActionType] Increment Page'
-}
+export const searchName = createAction(
+	'[Cards Page] Search Name',
+	props<{ nameFilter: string }>()
+);
 
-export class SearchName implements Action {
-	public readonly type = CardsActionType.SearchName;
+export const getCards = createAction(
+	'[Cards Page] Get Cards'
+);
 
-	constructor(public payload: string) {
-	}
-}
+export const getCardsSuccess = createAction(
+	'[Cards Page] Get Cards Success',
+	props<{ cardData: CardsData }>()
+);
 
-export class GetCards implements Action {
-	public readonly type = CardsActionType.GetCards;
-}
+export const getCardsFailed = createAction(
+	'[Cards Page] Get Cards Failed',
+	props<{ error: Error }>()
+);
 
-export class GetCardsSuccess implements Action {
-	public readonly type = CardsActionType.GetCardsSuccess;
-
-	constructor(public payload: CardsData) {
-	}
-}
-
-export class GetCardsFailed implements Action {
-	public readonly type = CardsActionType.GetCardsFailed;
-
-	constructor(public payload: Error) {
-	}
-}
-
-export class IncrementPage implements Action {
-	public readonly type = CardsActionType.IncrementPage;
-}
-
-export type CardsActions =
-	| SearchName
-	| GetCards
-	| GetCardsSuccess
-	| GetCardsFailed
-	| IncrementPage;
+export const incrementPage = createAction(
+	'[Cards Page] Increment Page'
+);

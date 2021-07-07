@@ -1,47 +1,39 @@
+import { Action, createReducer, on } from '@ngrx/store';
 import { CardsState, initialCardsState } from './cards.state';
-import { CardsActions, CardsActionType } from './cards.actions';
+import * as CardsPageActions from './cards.actions';
 
-export function cardsReducers(state: CardsState = initialCardsState, action: CardsActions): CardsState {
-	switch (action.type) {
-		case CardsActionType.SearchName: {
-			return {
-				...state,
-				total: null,
-				paging: {...state.paging, page: 1},
-				cards: [],
-				searchName: action.payload
-			};
-		}
-		case CardsActionType.GetCards: {
-			return {
-				...state,
-				isLoading: true,
-				error: null
-			};
-		}
-		case CardsActionType.GetCardsSuccess: {
-			return {
-				...state,
-				cards: [...state.cards, ...action.payload.cards],
-				total: action.payload.total,
-				isLoading: false
-			};
-		}
-		case CardsActionType.GetCardsFailed: {
-			return {
-				...state,
-				isLoading: false,
-				error: action.payload.message,
-				paging: {...state.paging, page: --state.paging.page || 1}
-			};
-		}
-		case CardsActionType.IncrementPage: {
-			return {
-				...state,
-				paging: {...state.paging, page: ++state.paging.page}
-			};
-		}
-		default:
-			return state;
-	}
+const cardsReducer = createReducer(
+	initialCardsState,
+	on(CardsPageActions.searchName, (state, { nameFilter }) => ({
+		...state,
+		total: null,
+		paging: { ...state.paging, page: 1 },
+		cards: [],
+		searchName: nameFilter
+	})),
+	on(CardsPageActions.getCards, (state) => ({
+		...state,
+		isLoading: true,
+		error: null
+	})),
+	on(CardsPageActions.getCardsSuccess, (state, { cardData }) => ({
+		...state,
+		cards: [...state.cards, ...cardData.cards],
+		total: cardData.total,
+		isLoading: false
+	})),
+	on(CardsPageActions.getCardsFailed, (state, { error }) => ({
+		...state,
+		isLoading: false,
+		error: error.message,
+		paging: { ...state.paging, page: --state.paging.page || 1 }
+	})),
+	on(CardsPageActions.incrementPage, (state) => ({
+		...state,
+		paging: { ...state.paging, page: ++state.paging.page }
+	}))
+);
+
+export function reducer(state: CardsState | undefined, action: Action) {
+	return cardsReducer(state, action);
 }
